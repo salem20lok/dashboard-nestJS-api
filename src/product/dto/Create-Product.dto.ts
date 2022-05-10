@@ -7,6 +7,7 @@ export class CreateProductDto {
   @IsNotEmpty()
   description: string;
 
+  @IsNotEmpty()
   images: string;
 
   @IsNotEmpty()

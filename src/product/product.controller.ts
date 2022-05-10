@@ -38,7 +38,7 @@ export class ProductController {
   @Get()
   ProductPagination(
     @Query() productPaginationDto: ProductPaginationDto,
-  ): Promise<Product[]> {
+  ): Promise<{ products: Product[]; count: number }> {
     return this.productService.ProductPagination(productPaginationDto);
   }
 
@@ -59,6 +59,8 @@ export class ProductController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   deleteProduct(@Param('id') id: string): Promise<void> {
     return this.productService.deleteProduct(id);
   }

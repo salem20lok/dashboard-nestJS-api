@@ -37,7 +37,7 @@ export class ProductService {
 
   async ProductPagination(
     productPaginationDto: ProductPaginationDto,
-  ): Promise<Product[]> {
+  ): Promise<{ products: Product[]; count: number }> {
     const { skip, limit, title, price, category } = productPaginationDto;
 
     const query = {
@@ -54,7 +54,10 @@ export class ProductService {
       .find(query)
       .limit(limit)
       .skip(skip);
-    return products;
+
+    const count = await this.productModel.find({}).count();
+
+    return { products: products, count: count };
   }
 
   async getProduct(id: string): Promise<Product> {
