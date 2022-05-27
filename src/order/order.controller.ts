@@ -49,6 +49,7 @@ export class OrderController {
     });
 
     const json = [];
+<<<<<<< HEAD
     const order: Order[] = await this.orderModel.find({}).populate('user');
 
     for (let i = 0; i < order.length; i++) {
@@ -74,6 +75,30 @@ export class OrderController {
         });
       }
     }
+=======
+    const order = await this.orderModel.find({});
+    order.forEach((el: Order) => {
+      json.push({
+        id: el.user._id,
+        name: el.user.lastName,
+        email: el.user.email,
+        'product Title': '',
+        price: '',
+        Quantity: '',
+      });
+
+      el.orderItems.forEach((e) => {
+        json.push({
+          id: '',
+          name: '',
+          email: '',
+          'product Title': e.title,
+          price: e.price,
+          Quantity: e.qte,
+        });
+      });
+    });
+>>>>>>> origin/main
     const csv = parser.parse(json);
     res.header('Content-Type', 'text/csv');
     res.attachment('orders.csv');
@@ -85,7 +110,11 @@ export class OrderController {
   @Roles(Role.Admin)
   allOrders(
     @Query() orderPaginationDto: OrdersPaginationDto,
+<<<<<<< HEAD
   ): Promise<{ orders: Order[]; count: number }> {
+=======
+  ): Promise<Order[]> {
+>>>>>>> origin/main
     return this.OrderService.allOrders(orderPaginationDto);
   }
 
