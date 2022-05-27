@@ -39,29 +39,19 @@ export class OrderService {
     await this.orderModel.findByIdAndDelete(id);
   }
 
-<<<<<<< HEAD
   async allOrders(
     ordersPaginationDto: OrdersPaginationDto,
   ): Promise<{ orders: Order[]; count: number }> {
     const { skip, limit } = ordersPaginationDto;
     const orders = await this.orderModel
-=======
-  async allOrders(ordersPaginationDto: OrdersPaginationDto): Promise<Order[]> {
-    const { skip, limit } = ordersPaginationDto;
-    const ordres = await this.orderModel
->>>>>>> origin/main
       .find({})
       .skip(skip)
       .limit(limit)
       .populate('user');
-<<<<<<< HEAD
 
     const count = await this.orderModel.find({}).count();
 
     return { orders: orders, count: count };
-=======
-    return ordres;
->>>>>>> origin/main
   }
 
   async myOrders(
